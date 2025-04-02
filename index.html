@@ -16,7 +16,8 @@
 
         function askMedicine() {
             let recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-            recognition.lang = "ne-NP"; // Recognize Nepali speech
+            //recognition.lang = "ne-NP"; // Recognize Nepali speech
+            recognition.lang = "en-US"; // Recognize English speech
             recognition.start();
 
             recognition.onresult = function(event) {
