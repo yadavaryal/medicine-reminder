@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Medicine Reminder</title>
+</head>
+<body>
+    <button onclick="askMedicine()">Ask if I need medicine</button>
+    <p id="response"></p>
+
+    <script>
+        function speak(text) {
+            let speech = new SpeechSynthesisUtterance(text);
+            speech.lang = "en-US";
+            window.speechSynthesis.speak(speech);
+        }
+
+        function askMedicine() {
+            let recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.lang = "en-US";
+            recognition.start();
+
+            recognition.onresult = function(event) {
+                let command = event.results[0][0].transcript.toLowerCase();
+                if (command.includes("medicine")) {
+                    let today = new Date();
+                    let takeMedicine = today.getDate() % 2 === 0;
+                    let response = takeMedicine ? "Yes, take your medicine today." : "No, you don't need it today.";
+                    document.getElementById("response").innerText = response;
+                    speak(response);
+                } else {
+                    speak("I didn't understand.");
+                }
+            };
+        }
+    </script>
+</body>
+</html>
