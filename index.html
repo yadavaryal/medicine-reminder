@@ -1,34 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html lang="ne">
 <head>
-    <title>Medicine Reminder</title>
+    <title>औषधी सम्झाउने एप</title>
 </head>
 <body>
-    <button onclick="askMedicine()">Ask if I need medicine</button>
+    <button onclick="askMedicine()">के म आज औषधी खानु पर्छ?</button>
     <p id="response"></p>
 
     <script>
         function speak(text) {
             let speech = new SpeechSynthesisUtterance(text);
-            speech.lang = "en-US";
+            speech.lang = "ne-NP";  // Set language to Nepali
             window.speechSynthesis.speak(speech);
         }
 
         function askMedicine() {
             let recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-            recognition.lang = "en-US";
+            recognition.lang = "ne-NP"; // Recognize Nepali speech
             recognition.start();
 
             recognition.onresult = function(event) {
                 let command = event.results[0][0].transcript.toLowerCase();
-                if (command.includes("medicine")) {
+                if (command.includes("औषधी") || command.includes("medicine")) {
                     let today = new Date();
                     let takeMedicine = today.getDate() % 2 === 0;
-                    let response = takeMedicine ? "Take only Rosutab today." : "Take both medicines, Rosutab and TGR.";
+                    let response = takeMedicine ? "आज केवल रोसुट्याब लिनुहोस्।" : "आज दुवै औषधी लिनुहोस्, रोसुट्याब र TGR।";
                     document.getElementById("response").innerText = response;
                     speak(response);
                 } else {
-                    speak("I didn't understand.");
+                    speak("माफ गर्नुहोस्, म बुझ्न सकिन।");
                 }
             };
         }
