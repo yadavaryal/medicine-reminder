@@ -10,22 +10,27 @@
     <script>
         function speak(text) {
             let speech = new SpeechSynthesisUtterance(text);
-            speech.lang = "ne-NP";  // Set language to Nepali
+            speech.lang = "ne-NP";  
             window.speechSynthesis.speak(speech);
         }
 
         function askMedicine() {
             let recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-            //recognition.lang = "ne-NP"; // Recognize Nepali speech
+            //recognition.lang = "ne-NP"; 
             recognition.lang = "en-US"; // Recognize English speech
             recognition.start();
 
             recognition.onresult = function(event) {
                 let command = event.results[0][0].transcript.toLowerCase();
                 if (command.includes("औषधी") || command.includes("medicine")) {
+                    let startDate = new Date(2024, 3, 1); // April 1, 2024 (month is 0-based, so 3 = April)
                     let today = new Date();
-                    let takeMedicine = today.getDate() % 2 === 0;
+                    
+                    let diffDays = Math.floor((today - startDate) / (1000 * 60 * 60 * 24)); // Calculate difference in days
+
+                    let takeMedicine = diffDays % 2 === 0;
                     let response = takeMedicine ? "आज केवल रोसुट्याब लिनुहोस्।" : "आज दुवै औषधी लिनुहोस्, रोसुट्याब र TGR।";
+                    
                     document.getElementById("response").innerText = response;
                     speak(response);
                 } else {
