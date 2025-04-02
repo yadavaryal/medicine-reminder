@@ -24,7 +24,7 @@
                 if (command.includes("medicine")) {
                     let today = new Date();
                     let takeMedicine = today.getDate() % 2 === 0;
-                    let response = takeMedicine ? "Yes, take your medicine today." : "No, you don't need it today.";
+                    let response = takeMedicine ? "Take both medicines, Rosutab and TGR." : "Take only Rosutab today.";
                     document.getElementById("response").innerText = response;
                     speak(response);
                 } else {
